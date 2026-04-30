@@ -37,5 +37,5 @@ The **Interceptor V1** demonstrates the critical balance between raw power and a
 > **Note:** For a deep dive into the fluid dynamics and mass budget, please refer to the [Full Project Report](docs/Interceptor_Design_Report.pdf).
 
 ---
-**Author:** [Aayushman Das]  
+**Author:** Aayushman Das  
 *Department of Electronics and Telecommunication Engineering, Jadavpur University*
