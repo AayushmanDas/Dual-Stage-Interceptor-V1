@@ -1,0 +1,114 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.8in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}
+
+\title{\textbf{Engineering Design Report: Dual-Stage Carbon Fiber Interceptor}}
+\author{
+    \textbf{Aayushman Das} \\
+    \textit{Department of Electronics and Telecommunication Engineering} \\
+    Jadavpur University
+}
+\date{May 1, 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+The Interceptor project focused on the development of a high-performance, two-stage sounding rocket designed for subsonic-supersonic transition research. The primary design goals were to achieve a peak altitude exceeding 600 meters while maintaining a strict aerodynamic stability margin between 2.0 and 2.5 calibers. The airframe utilizes carbon fiber composites to maximize the thrust-to-weight ratio, enabling high acceleration off the launch rail.
+
+\section{Vehicle Architecture}
+The rocket is a dual-stage configuration consisting of a sustainer and a booster section. Total vehicle length is 1350 mm with a maximum diameter of 54 mm.
+
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item \textbf{Sustainer Section:} Housing the flight computer, primary recovery system, and an AeroTech H100W motor.
+    \item \textbf{Booster Section:} A 450 mm high-volume stage containing an AeroTech I200W motor and a dedicated booster recovery system.
+    \item \textbf{Transition:} A custom 50 mm boattail was integrated at the aft of the booster to optimize the wake profile and reduce base drag during the high-velocity boost phase.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{render_xray_internal_layout.png}
+    \caption{X-Ray Render: Internal component layout and Stage 1 motor mount geometry.}
+\end{figure}
+
+\section{Aerodynamic Optimization and Stability Tuning}
+The initial design iteration exhibited an over-stable condition of 3.79 cal. While stable, such a high margin causes aggressive weathercocking, where the rocket turns into the wind, wasting motor energy and significantly reducing apogee.
+
+\subsection{Fin Geometry Iteration}
+To optimize stability, the booster fins were re-engineered from a standard trapezoidal shape to a high-sweep "sheared" profile. 
+\begin{itemize}
+    \item \textbf{Height Reduction:} Lowered to 50 mm to move the Center of Pressure (CP) forward.
+    \item \textbf{Sweep Optimization:} Increased to 60 mm, shifting the lift center of the fin set further back to balance the forward CG shift as the motor burns fuel.
+    \item \textbf{Final Margin:} The iterations resulted in a static stability of 2.27 cal at launch, which is considered ideal for high-power interceptors.
+\end{itemize}
+
+\section{Flight Simulation and Performance}
+Flight data was compiled using 6-DOF simulation models. The flight profile is defined by a rapid Stage 1 boost, followed by a precisely timed stage separation and sustainer ignition.
+
+\subsection{Propulsion and Staging}
+The launch sequence utilizes an AeroTech I200W-14 booster. Stage separation occurs at $T+2.0s$ (Burnout + 0.1s), followed by the ignition of the H100W sustainer. This sequence ensures the booster mass is discarded at the moment of highest drag, allowing the lighter sustainer to reach a peak velocity of 112 m/s (Mach 0.33).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{plot_vertical_motion.png}
+    \caption{Flight Profile: Altitude (m), Velocity (m/s), and Acceleration (G) vs. Time.}
+\end{figure}
+
+\subsection{Performance Summary}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{@{}ll@{}}
+    \toprule
+    \textbf{Metric} & \textbf{Value} \\ \midrule
+    Apogee & 631 m \\
+    Max Velocity & 112 m/s (Mach 0.33) \\
+    Max Acceleration & 11.1 G \\
+    Launch Mass & 2559 g \\
+    Landing Velocity & 5.2 m/s (under main chute) \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Stability Analysis during Flight}
+Dynamic stability was tracked throughout the ascent. At launch, the stability sits at 2.27 cal. As the booster motor burns fuel, the Center of Gravity (CG) moves forward, briefly increasing stability. Upon stage separation, the vehicle sheds the booster fins and mass, shifting the stability to a consistent 2.02 cal for the remainder of the sustainer burn.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{plot_static_stability.png}
+    \caption{Static Stability Margin (cal) and CP/CG Location vs. Time.}
+\end{figure}
+
+\section{Computational Fluid Dynamics (CFD) Metrics}
+To validate the aerodynamic efficiency of the sheared fins and boattail, the Drag Coefficient ($C_D$) and Reynolds Number were analyzed.
+
+\subsection{Drag Coefficient Analysis}
+The $C_D$ profile remains remarkably flat throughout the subsonic regime. The boattail successfully suppressed the base drag spike typically seen at the rear of blunt airframes. A transient spike in $C_D$ is observed during the staging event, representing the instantaneous change in vehicle geometry.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{plot_drag_coefficient.png}
+    \caption{Coefficient of Drag ($C_D$) vs. Mach Number.}
+\end{figure}
+
+\subsection{Flow Regime}
+Reynolds Number analysis indicates peak values of $1.0 \times 10^7$, confirming a fully turbulent boundary layer over the carbon fiber airframe. This data was used to ensure that the skin friction calculations in the simulation were appropriately scaled for high-speed flight.
+
+\section{Recovery System Design}
+Safety is maintained via a dual-deployment strategy.
+\begin{enumerate}
+    \item \textbf{Stage 1 (Booster):} Deploys a high-visibility parachute at separation to ensure the booster section is recovered safely for reuse.
+    \item \textbf{Stage 2 (Sustainer):} Deploys a small drogue at apogee, followed by a primary Ripstop Nylon parachute at 150m AGL to ensure a soft landing for the onboard electronics.
+\end{enumerate}
+
+\section{Conclusion}
+The Interceptor project successfully met all design requirements. By moving from a "safe but inefficient" 3.79 cal stability to a "tuned" 2.27 cal configuration, the vehicle gained significant altitude and velocity. The final build serves as a robust platform for future telemetry experiments and demonstrates the critical importance of iterative aerodynamic tuning in aerospace engineering.
+
+\end{document}
